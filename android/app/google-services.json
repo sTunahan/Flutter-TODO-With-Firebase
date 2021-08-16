@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "292075179089",
+    "project_id": "notebook2-ccef2",
+    "storage_bucket": "notebook2-ccef2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292075179089:android:0328823b0679b00349fc70",
+        "android_client_info": {
+          "package_name": "com.example.notebooktwo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292075179089-h9g4ubemr9l0pmrvrja9ltjdii49mv1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaG8TVcw7CoxN00-VCR-cJRgDUQ7zgToo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292075179089-h9g4ubemr9l0pmrvrja9ltjdii49mv1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
