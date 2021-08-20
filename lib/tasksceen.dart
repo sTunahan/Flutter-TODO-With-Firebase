@@ -11,7 +11,6 @@ class TaskSceen extends StatefulWidget {
 }
 
 class _TaskSceenState extends State<TaskSceen> {
-  // Girilen İnputları Alır.
   TextEditingController nameController = TextEditingController();
   TextEditingController deadlineController = TextEditingController();
 
@@ -28,10 +27,7 @@ class _TaskSceenState extends State<TaskSceen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextFormField(
-              controller:
-                  nameController, // Girilen Inputu Alır. nameController a yollar.Sonra bu Girileni ide Aşagida set() ile yollarız.
-
-              // buraya gırılenı alır yukarıya yollar yukarıda fierbase e yollar.
+              controller: nameController,
               decoration: InputDecoration(
                   labelText: "Task Name", border: OutlineInputBorder()),
             ),
@@ -62,20 +58,11 @@ class _TaskSceenState extends State<TaskSceen> {
   void addData() async {
     FirebaseAuth authority = FirebaseAuth.instance;
 
-    // Şimdi Girelen Dataları(görevleri) Hangi Kullanıcıya Ekliyecigini söylemek için(Uygulama calısır vazıyette
-    // Kullanıcı Email ı ile giriş yapmış bulunmakta) Kullanıcı bilgisini Firebase den almamız lazım.
-
     User currentUser = await authority.currentUser!;
-
-    // Alınan kullanıcı bilgisini değişkene atıyoruz.
 
     String uidHolder = currentUser.uid;
 
-    // Data oluşturulurken zamanınıda kayıt etmesi için
-
     var TimeHolder = DateTime.now();
-
-    // Verileri Firebase'e artık yollarız set() ile
 
     FirebaseFirestore.instance
         .collection("Tasks")

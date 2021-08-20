@@ -9,9 +9,9 @@ class SignUpSceen extends StatefulWidget {
   _SignUpSceenState createState() => _SignUpSceenState();
 }
 
-// kayıt durumu
+// registration status
 bool registrationStatus = false;
-//Tutulacak Kullanıcı Bilgileri
+//User Information to Keep
 late String userName, email, password;
 
 class _SignUpSceenState extends State<SignUpSceen> {
@@ -42,8 +42,7 @@ class _SignUpSceenState extends State<SignUpSceen> {
                           userName = receivedUserName;
                         },
                         validator: (receivedUserName) {
-                          return receivedUserName!
-                                  .isEmpty // isEmpty Boş ise demek
+                          return receivedUserName!.isEmpty
                               ? "Boş Bırakılamaz"
                               : null;
                         },
@@ -92,7 +91,6 @@ class _SignUpSceenState extends State<SignUpSceen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Firebase e Kayıt etme Fonksıyonu
                         SignUp();
                       },
                       child:
@@ -100,7 +98,6 @@ class _SignUpSceenState extends State<SignUpSceen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // burada ekran gecıslerını saglamak ıcın kullanacagız.
                         setState(() {
                           registrationStatus = !registrationStatus;
                           print("$registrationStatus");
@@ -127,32 +124,27 @@ class _SignUpSceenState extends State<SignUpSceen> {
   }
 }
 
-// Bilgileri Firebase e yollama fonksıyonu
+// Function to send information to Firebase
 
 sendToFirebase(String userName, String email, String password) async {
   final authority = FirebaseAuth.instance; // yetkiyi aldırıyorum
-  UserCredential
-      resultOfAuthorization; // yetkiye göre sonuç aldırıyorum (resultOfAuthorization=YETKİ SONUCU)
-
-  // kayıt durumu true ise giriş yap
+  UserCredential resultOfAuthorization;
 
   if (registrationStatus) {
-    //bu işlemle girilen  email ve password ile giriş yaptırıyoruz.
     resultOfAuthorization = await authority.signInWithEmailAndPassword(
         email: email, password: password);
   }
-  // KayıtOL
+  // SignUp
   else {
-    // Kayıt Oluşturma işlemi  bu işlem ile email ve password bilgileri firebase e kayıt ediliyor.
+    //Registration Creation process, with this process, email and password information are saved in firebase.
     resultOfAuthorization = await authority.createUserWithEmailAndPassword(
         email: email, password: password);
 
-    String uidHolder = resultOfAuthorization.user!
-        .uid; // ilgili kullanıcının uid sini alıp bir değişkene atıyoruz. Bununlada Her kullanıcıya aid verileri tutacagız.
+    String uidHolder = resultOfAuthorization.user!.uid;
 
-    await FirebaseFirestore.instance.collection("Users").doc(uidHolder).set({
-      "Name:": userName,
-      "Email": email
-    }); //set ile verileri firebase e yolladık
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(uidHolder)
+        .set({"Name:": userName, "Email": email});
   }
 }

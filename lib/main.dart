@@ -23,12 +23,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: StreamBuilder(
-          stream: FirebaseAuth.instance
-              .authStateChanges(), // stream firebase e bakarak akış saglar
+          stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, userData) {
-            // builder firebase den gelen veriye göre bilgiye göre inşa etmemizi saglar.
+            // The builder allows us to build according to the data (according to the information) from the firebase.
             if (userData.hasData) {
-              // veri var ise
+              // if data exists
               return ToDoSceen();
             } else {
               return SignUpSceen();

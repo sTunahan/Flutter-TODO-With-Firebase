@@ -15,7 +15,7 @@ class ToDoSceen extends StatefulWidget {
 class _ToDoSceenState extends State<ToDoSceen> {
   late String currentUserUidHolder;
 
-  //İLK SAYFA AÇILDIGINDA
+// WHEN THE FIRST PAGE IS OPENED
   @override
   void initState() {
     // TODO: implement initState
@@ -26,12 +26,10 @@ class _ToDoSceenState extends State<ToDoSceen> {
   currentUserHolder() async {
     FirebaseAuth authhority = FirebaseAuth.instance;
 
-    User currentUser =
-        await authhority.currentUser!; // mevcut kullanıcıyı aldık
+    User currentUser = await authhority.currentUser!; // get the current user
 
     setState(() {
-      currentUserUidHolder =
-          currentUser.uid; // sımdı  mevcutkullanıcı yı Degıskende saklıyorum.
+      currentUserUidHolder = currentUser.uid;
     });
   }
 
@@ -57,25 +55,21 @@ class _ToDoSceenState extends State<ToDoSceen> {
                 .doc(currentUserUidHolder)
                 .collection("Task")
                 .snapshots(),
-            // snapshoths ile Görevleri cagır demış olduk, veri tabanındakı verılerı temsıl eder
-
             builder: (context, AsyncSnapshot myData) {
               if (myData.connectionState == ConnectionState.waiting) {
-                // eger verılerım bekleniyorsa iletişim kopuklugu var ise ozaman ekranın merkezınde dönerek beklenıyor göstersin Eger degılse  Listele dedık
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                final receivedData = myData.data!
-                    .docs; //veritabanındakı butun belgelerı alıp receıvedData ya verdık
+                final receivedData = myData.data!.docs;
 
                 return ListView.builder(
                   itemCount: receivedData.length,
-                  // alınan verı kactane ise satır sayısı o kadar olsun
+                  // If the received data is how many rows, that's the number of rows
                   itemBuilder: (context, index) {
-                    // her indexse özel satır inşa edecek
+                    // will build a special row for each index
 
-                    // Eklenme zamanı tutucu
+                    // Insert time holder
                     var addTimeReceived =
                         (receivedData[index]["Full Time"] as Timestamp)
                             .toDate();
@@ -96,8 +90,6 @@ class _ToDoSceenState extends State<ToDoSceen> {
                                 Text(
                                   receivedData[index]["name"],
                                 ),
-
-                                //ZAMANI EKLEMİŞ OLDUK
                                 Text(DateFormat.yMd()
                                     .add_jm()
                                     .format(addTimeReceived))
